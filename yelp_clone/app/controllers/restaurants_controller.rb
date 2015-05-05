@@ -4,5 +4,9 @@ class RestaurantsController < ApplicationController
   end
 
   def new
-  end  
+  end
+
+  def create
+    raise parmas
+  end
 end
