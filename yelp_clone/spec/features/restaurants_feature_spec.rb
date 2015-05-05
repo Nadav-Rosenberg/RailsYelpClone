@@ -11,13 +11,8 @@ feature 'restaurants' do
 
   context 'restaurants have been added' do
     before do
-      rest = Restaurant.create(name: 'KFC')
-      p rest
-    end 
-
-    after do
-      p "Restaurant.all:  #{Restaurant.all.inspect}"
-    end 
+      Restaurant.create(name: 'KFC')
+    end  
 
     scenario 'display restaurants' do
       visit '/restaurants'
@@ -49,17 +44,16 @@ feature 'restaurants' do
     end  
   end
 
-  context 'editing restaurants' do
-    before {Restaurant.create(name: 'KFC')}
+  context 'deleting restaurants' do
 
-    scenario 'let a user edit a restaurant' do
+    before {Restaurant.create name: 'KFC'}
+
+    scenario 'remove a restaurant when a user clicks a delete link' do
       visit '/restaurants'
-      click_link 'Edit KFC'
-      fill_in 'Name', with: 'Kentucky Fried Chicken'
-      click_button 'Update Restaurant'
-      expect(page).to have_content 'Kentucky Fried Chicken'
-      expect(current_path).to eq '/restaurants'
-    end
-  end
+      click_link 'Delete KFC'
+      expect(page).not_to have_content 'KFC'
+      expect(page).to have_content 'Restaurant deleted successfully'
+    end 
+  end   
 
 end
