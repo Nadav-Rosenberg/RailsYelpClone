@@ -26,3 +26,22 @@ Things you may want to cover:
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
+
+#REFLECTIONS
+
+# Day 1
+
+* you create controllers and models via command line commands
+
+* databases, similar to datamapper in principles, need to migrate 
+
+* using the predefined paths, then methods in the controller are authmatically called 
+
+* routes help you set paths with the resources commands
+
+* huge difference between singular and plural 
+
+* testing, very similar to sinatra (very little feature tests)
+
+* bin/rake routes (come from routes.rb and kep for building up the app)
+
