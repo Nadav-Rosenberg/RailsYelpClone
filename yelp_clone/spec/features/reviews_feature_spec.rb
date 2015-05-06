@@ -13,4 +13,21 @@ feature 'reviewing' do
     expect(current_path).to eq '/restaurants'
     expect(page).to have_content('so so')
   end
+
+  scenario 'when parent restaurant is destroyed, child reviews are destroyed as well' do
+    visit '/restaurants'
+    click_link 'Review KFC'
+    fill_in "Thoughts", with: "so so"
+    select '3', from: 'Rating'
+    click_button 'Leave Review'
+    click_link 'Review KFC'
+    fill_in "Thoughts", with: "sagarsg"
+    select '3', from: 'Rating'
+    click_button 'Leave Review'
+    click_link 'Delete KFC'
+    expect(current_path).to eq '/restaurants'
+    expect(page).not_to have_content('so so')
+
+  end
+  
 end
