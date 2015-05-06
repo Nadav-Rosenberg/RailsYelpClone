@@ -8,12 +8,17 @@ class RestaurantsController < ApplicationController
   end
 
   def create
-    @restaurant = Restaurant.new(restaurant_params)
-    if @restaurant.save
-      redirect_to restaurants_path
+    if user_signed_in?
+      @restaurant = Restaurant.new(restaurant_params)
+      if @restaurant.save
+        redirect_to restaurants_path
+      else
+        render 'new'
+      end
     else
-      render 'new'
-    end
+      flash[:notice] = 'error, must sign in to add restaurant'
+      redirect_to '/restaurants'
+    end  
   end
 
   def show 
