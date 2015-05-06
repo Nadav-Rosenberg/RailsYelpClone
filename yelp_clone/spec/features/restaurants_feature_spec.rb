@@ -22,7 +22,25 @@ feature 'restaurants' do
   end 
 
   context 'creating restaurants' do
+
+    scenario 'cannot add restaurant when not logged in' do
+      visit '/restaurants'
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'KFC'
+      click_button 'Create Restaurant'
+      expect(page).not_to have_content 'KFC'
+      expect(page).to have_content 'error'  
+    end
+
     scenario 'prompts user to fill out a form, then displays the new restaurant' do
+    
+      visit '/'
+      click_link('Sign up')
+      fill_in('Email', with: 'test@example.com')
+      fill_in('Password', with: 'testtest')
+      fill_in('Password confirmation', with: 'testtest')
+      click_button 'Sign up'
+      
       visit '/restaurants'
       click_link 'Add a restaurant'
       fill_in 'Name', with: 'KFC'
@@ -31,7 +49,8 @@ feature 'restaurants' do
       expect(current_path).to eq '/restaurants'
     end 
 
-    context 'an invalid restaurant' do
+
+  context 'an invalid restaurant' do
       it'does not let you submit a name that is too short' do
         visit '/restaurants'
         click_link 'Add a restaurant'
