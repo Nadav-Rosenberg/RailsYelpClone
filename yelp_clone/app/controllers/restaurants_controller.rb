@@ -9,6 +9,7 @@ class RestaurantsController < ApplicationController
 
   def create
     Restaurant.create(restaurant_params)
+    flash[:notice] = 'error' if Restaurant.create.errors.any? 
     redirect_to '/restaurants'
   end
 
