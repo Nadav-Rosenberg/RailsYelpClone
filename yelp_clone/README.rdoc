@@ -41,7 +41,7 @@ Please feel free to use a different markup language if you do not plan to run
 
 * huge difference between singular and plural 
 
-* testing, very similar to sinatra (very little feature tests)
+* testing, very similar to sinatra (very little unit tests)
 
-* bin/rake routes (come from routes.rb and kep for building up the app)
+* bin/rake routes (come from routes.rb and key for building the app)
 
