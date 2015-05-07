@@ -10,9 +10,11 @@ class ReviewsController < ApplicationController
   def create
     @restaurant = Restaurant.find(params[:restaurant_id])
     new_params = review_params.merge( { "user_id" => current_user.id } )
-    @review = @restaurant.reviews.create(review_params)
-    @review.user_id = current_user.id
+
+    @review = @restaurant.reviews.new(new_params)
     @review.save
+    flash[:notice] = @review.errors[:user_id][0] unless @review.save
+    @review.user_id = current_user.id
     redirect_to restaurants_path
   end
 

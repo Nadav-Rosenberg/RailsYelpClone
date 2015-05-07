@@ -5,27 +5,14 @@ feature 'reviewing' do
 
   scenario 'allows users to leave a review using a form' do
     sign_up_for_tests
-    visit '/restaurants'
-    click_link 'Review KFC'
-    fill_in "Thoughts", with: "so so"
-    select '3', from: 'Rating'
-    click_button 'Leave Review'
-
+    leave_review
     expect(current_path).to eq '/restaurants'
     expect(page).to have_content('so so')
   end
 
   scenario 'when parent restaurant is destroyed, child reviews are destroyed as well' do
     sign_up_for_tests
-    visit '/restaurants'
-    click_link 'Review KFC'
-    fill_in "Thoughts", with: "so so"
-    select '3', from: 'Rating'
-    click_button 'Leave Review'
-    click_link 'Review KFC'
-    fill_in "Thoughts", with: "sagarsg"
-    select '3', from: 'Rating'
-    click_button 'Leave Review'
+    leave_review
     click_link 'Delete KFC'
     expect(current_path).to eq '/restaurants'
     expect(page).not_to have_content('so so')
@@ -34,11 +21,7 @@ feature 'reviewing' do
 
   scenario 'reviews can be deleted' do
     sign_up_for_tests
-    visit '/restaurants'
-    click_link 'Review KFC'
-    fill_in "Thoughts", with: "so so"
-    select '3', from: 'Rating'
-    click_button 'Leave Review'
+    leave_review
     visit '/'
     click_link 'KFC'
     click_link 'Delete Review'
@@ -50,11 +33,7 @@ feature 'reviewing' do
 
   scenario 'Reviews can only be deleted by the user that created them' do
     sign_up_for_tests
-    visit '/restaurants'
-    click_link 'Review KFC'
-    fill_in "Thoughts", with: "so so"
-    select '3', from: 'Rating'
-    click_button 'Leave Review'
+    leave_review
     visit '/'
     click_link('Sign out')
     sign_up_for_tests 2
@@ -64,6 +43,16 @@ feature 'reviewing' do
     expect(page).not_to have_content('Review deleted successfully')
     expect(page).to have_content('Only author can delete review')
     expect(current_path).to eq "/restaurants/#{@restaurant.id}"  
+  end
+
+  scenario 'users can only leave one review per restaurant' do
+    sign_up_for_tests
+    leave_review
+    leave_review "another review"
+    expect(page).to have_content("You can only leave one review per restaurant")
+    visit '/'
+    expect(page).not_to have_content("another review")
+
   end
   
 end

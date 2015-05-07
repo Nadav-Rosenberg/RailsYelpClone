@@ -94,3 +94,11 @@ def sign_up_for_tests(number = 1)
   fill_in('Password confirmation', with: 'testtest')
   click_button 'Sign up'
 end
+
+def leave_review(review = "so so")
+  visit '/restaurants'
+  click_link 'Review KFC'
+  fill_in "Thoughts", with: review
+  select '3', from: 'Rating'
+  click_button 'Leave Review'
+end
