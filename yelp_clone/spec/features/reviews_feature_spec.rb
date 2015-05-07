@@ -30,5 +30,34 @@ feature 'reviewing' do
     expect(page).not_to have_content('so so')
 
   end
+
+  scenario 'reviews can be deleted' do
+    sign_up_for_tests
+    visit '/restaurants'
+    click_link 'Review KFC'
+    fill_in "Thoughts", with: "so so"
+    select '3', from: 'Rating'
+    click_button 'Leave Review'
+    visit '/'
+    click_link 'KFC'
+    click_link 'Delete Review'
+    expect(page).not_to have_content('so so')
+    expect(page).to have_content('Restaurant deleted successfully')
+    expect(current_path).to eq '/restaurants'
+
+  end
+
+  # scenario 'Reviews can only be deleted by the user that created them' do
+  #   sign_up_for_tests
+  #   visit '/restaurants'
+  #   click_link 'Review KFC'
+  #   fill_in "Thoughts", with: "so so"
+  #   select '3', from: 'Rating'
+  #   click_button 'Leave Review'
+  #   visit '/'
+  #   click_link('Sign out')
+  #   sign_up_for_tests 2
+    
+  # end
   
 end
