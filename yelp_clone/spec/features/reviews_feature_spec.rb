@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'reviewing' do
-  before {Restaurant.create name: 'KFC'}
+  before { @restaurant = Restaurant.create name: 'KFC' }
 
   scenario 'allows users to leave a review using a form' do
     visit '/restaurants'
@@ -42,8 +42,8 @@ feature 'reviewing' do
     click_link 'KFC'
     click_link 'Delete Review'
     expect(page).not_to have_content('so so')
-    expect(page).to have_content('Restaurant deleted successfully')
-    expect(current_path).to eq '/restaurants'
+    expect(page).to have_content('Review deleted successfully')
+    expect(current_path).to eq "/restaurants/#{@restaurant.id}"
 
   end
 
