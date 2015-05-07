@@ -15,6 +15,7 @@ feature 'reviewing' do
   end
 
   scenario 'when parent restaurant is destroyed, child reviews are destroyed as well' do
+    sign_up_for_tests
     visit '/restaurants'
     click_link 'Review KFC'
     fill_in "Thoughts", with: "so so"
