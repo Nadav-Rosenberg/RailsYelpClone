@@ -54,6 +54,12 @@ Please feel free to use a different markup language if you do not plan to run
 
 * found that some of the provided features tests were not thourgh and were passable without achieving the desired result.
 
+# Day 2 PM
+
+* worked on Omniauth (adding env variables must refresh the terminal)
+
+* 
+
 
 
 ===============================================================================
