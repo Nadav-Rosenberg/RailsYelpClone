@@ -32,10 +32,7 @@ feature 'restaurants' do
   context 'when signed in' do
     scenario 'prompts user to fill out a form, then displays the new restaurant' do
       sign_up_for_tests
-      visit '/restaurants'
-      click_link 'Add a restaurant'
-      fill_in 'Name', with: 'KFC'
-      click_button 'Create Restaurant'
+      add_restaurant
       expect(page).to have_content 'KFC'
       expect(current_path).to eq '/restaurants'
     end 
@@ -65,7 +62,7 @@ feature 'restaurants' do
       end  
     end
 
-    context 'deleting restaurants' do
+    context 'deleting and editing restaurants' do
 
       before {Restaurant.create name: 'KFC'}
 
@@ -76,6 +73,14 @@ feature 'restaurants' do
         expect(page).not_to have_content 'KFC'
         expect(page).to have_content 'Restaurant deleted successfully'
       end 
-    end  
+
+      xscenario 'cannot delete restaurant unless creator' do
+        sign_up_for_tests
+        visit '/restaurants'
+        click_link 'Delete KFC'
+        expect(page).not_to have_content 'KFC'
+        expect(page).to have_content 'Restaurant deleted successfully'
+      end
+    end      
   end
 end

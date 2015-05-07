@@ -102,3 +102,10 @@ def leave_review(review = "so so")
   select '3', from: 'Rating'
   click_button 'Leave Review'
 end
+
+def add_restaurant(name = "KFC")
+  visit '/restaurants'
+  click_link 'Add a restaurant'
+  fill_in 'Name', with: name
+  click_button 'Create Restaurant'
+end      
